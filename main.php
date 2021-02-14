@@ -79,10 +79,10 @@ class SponsoredPost extends Post // 子クラス Subクラス
   }
 
   // override
-  public function show()
-  {
-    printf('%s by %s' . PHP_EOL, $this->text, $this->sponsor);
-  }
+  // public function show()
+  // {
+  //   printf('%s by %s' . PHP_EOL, $this->text, $this->sponsor);
+  // }
 }
 
 
@@ -104,11 +104,19 @@ $posts[1] = new Post('hello again');
 
 $posts[2] = new SponsoredPost('hello hello', 'dotinstall');
 
+function processPost(Post $post)
+{
+  $post->show();
+}
+
 $posts[0]->like();
 
-$posts[0]->show();
-$posts[1]->show();
-$posts[2]->show();
+// $posts[0]->show();
+// $posts[1]->show();
+// $posts[2]->show();
+foreach ($posts as $post) {
+  processPost($post);
+}
 $posts[2]->showSponsor();
 
 Post::showInfo();
