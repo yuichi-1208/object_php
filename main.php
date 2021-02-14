@@ -14,12 +14,12 @@
 // show($posts[0]);
 // show($posts[1]);
 
-declare(strict_types=1);
+// declare(strict_types=1);
 
-// クラス
-class Post //親クラス Superクラス
+// 子クラスにメソッドの定義を強制できる抽象クラス
+abstract class BasePost
 {
-  // プロパティ
+    // プロパティ
   // 継承先でもプロパティを使いたい時はprivateではなくprotected
   // publicはどこでもアクセス可能
   // privateは定義したクラスのみアクセス可能
@@ -40,9 +40,20 @@ class Post //親クラス Superクラス
     self::$count++;
   }
 
+  abstract public function show();
+}
+
+// クラス
+class Post extends BasePost//親クラス Superクラス
+{
   // メソッド
   // overrideしてほしくない時は final をつける
-  final public function show()
+  // final public function show()
+  // {
+  //   printf('%s (%d)' . PHP_EOL, $this->text, $this->likes);
+  // }
+
+  public function show()
   {
     printf('%s (%d)' . PHP_EOL, $this->text, $this->likes);
   }
@@ -58,12 +69,12 @@ class Post //親クラス Superクラス
 
   public static function showInfo()
   {
-    printf('Count: %d' . PHP_EOL, self::$count);
+    // printf('Count: %d' . PHP_EOL, self::$count);
     printf('Version: %.1f' . PHP_EOL, self::VERSION);
   }
 }
 
-class SponsoredPost extends Post // 子クラス Subクラス
+class SponsoredPost extends BasePost // 子クラス Subクラス
 {
   private $sponsor;
 
@@ -79,10 +90,10 @@ class SponsoredPost extends Post // 子クラス Subクラス
   }
 
   // override
-  // public function show()
-  // {
-  //   printf('%s by %s' . PHP_EOL, $this->text, $this->sponsor);
-  // }
+  public function show()
+  {
+    printf('%s by %s' . PHP_EOL, $this->text, $this->sponsor);
+  }
 }
 
 
@@ -104,7 +115,7 @@ $posts[1] = new Post('hello again');
 
 $posts[2] = new SponsoredPost('hello hello', 'dotinstall');
 
-function processPost(Post $post)
+function processPost(BasePost $post)
 {
   $post->show();
 }
@@ -117,6 +128,7 @@ $posts[0]->like();
 foreach ($posts as $post) {
   processPost($post);
 }
+
 $posts[2]->showSponsor();
 
 Post::showInfo();
