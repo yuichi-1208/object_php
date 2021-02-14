@@ -20,7 +20,11 @@ declare(strict_types=1);
 class Post //親クラス Superクラス
 {
   // プロパティ
-  private $text;
+  // 継承先でもプロパティを使いたい時はprivateではなくprotected
+  // publicはどこでもアクセス可能
+  // privateは定義したクラスのみアクセス可能
+  // protectedは定義したクラスと継承したクラスでのみアクセス可能
+  protected $text;
   private static $count = 0;
   public const VERSION = 0.1;
   private $likes = 0;
@@ -37,7 +41,8 @@ class Post //親クラス Superクラス
   }
 
   // メソッド
-  public function show()
+  // overrideしてほしくない時は final をつける
+  final public function show()
   {
     printf('%s (%d)' . PHP_EOL, $this->text, $this->likes);
   }
@@ -71,6 +76,12 @@ class SponsoredPost extends Post // 子クラス Subクラス
   public function showSponsor()
   {
     printf('%s' . PHP_EOL, $this->sponsor);
+  }
+
+  // override
+  public function show()
+  {
+    printf('%s by %s' . PHP_EOL, $this->text, $this->sponsor);
   }
 }
 
