@@ -21,6 +21,7 @@ class Post
 {
   // プロパティ
   private $text;
+  private static $count = 0;
   private $likes = 0;
 
   // public function __construct($textFromNew, $likesFromNew)
@@ -28,9 +29,10 @@ class Post
   //   $this->text = $textFromNew;
   //   $this->likes = $likesFromNew;
   // }
-  public function __construct(string $text)
+  public function __construct($text)
   {
     $this->text = $text;
+    self::$count++;
   }
 
   // メソッド
@@ -47,13 +49,18 @@ class Post
       $this->likes = 100;
     }
   }
+
+  public static function showInfo()
+  {
+    printf('Count: %d' . PHP_EOL, self::$count);
+  }
 }
 
 $posts = [];
 
 // インスタンス
-// $posts[0] = new Post('hello');
-$posts[0] = new Post(4);
+$posts[0] = new Post('hello');
+// $posts[0] = new Post(4);
 // $posts[0]->text = 'hello';
 // $posts[0]->likes = 0;
 
@@ -68,3 +75,5 @@ $posts[0]->like();
 
 $posts[0]->show();
 $posts[1]->show();
+
+Post::showInfo();
