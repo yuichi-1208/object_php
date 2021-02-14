@@ -14,11 +14,13 @@
 // show($posts[0]);
 // show($posts[1]);
 
+declare(strict_types=1);
+
 // クラス
 class Post
 {
   // プロパティ
-  public $text;
+  private $text;
   private $likes = 0;
 
   // public function __construct($textFromNew, $likesFromNew)
@@ -26,7 +28,7 @@ class Post
   //   $this->text = $textFromNew;
   //   $this->likes = $likesFromNew;
   // }
-  public function __construct($text)
+  public function __construct(string $text)
   {
     $this->text = $text;
   }
@@ -50,7 +52,8 @@ class Post
 $posts = [];
 
 // インスタンス
-$posts[0] = new Post('hello');
+// $posts[0] = new Post('hello');
+$posts[0] = new Post(4);
 // $posts[0]->text = 'hello';
 // $posts[0]->likes = 0;
 
