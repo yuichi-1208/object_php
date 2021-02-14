@@ -17,7 +17,7 @@
 declare(strict_types=1);
 
 // クラス
-class Post
+class Post //親クラス Superクラス
 {
   // プロパティ
   private $text;
@@ -58,6 +58,11 @@ class Post
   }
 }
 
+class SponsoredPost extends Post // 子クラス Subクラス
+{
+
+}
+
 $posts = [];
 
 // インスタンス
@@ -73,10 +78,13 @@ $posts[1] = new Post('hello again');
 // $posts[0]->likes++;
 // $posts[0]->likes = -100;
 
+$posts[2] = new SponsoredPost('hello hello');
+
 $posts[0]->like();
 
 $posts[0]->show();
 $posts[1]->show();
+$posts[2]->show();
 
 Post::showInfo();
 
