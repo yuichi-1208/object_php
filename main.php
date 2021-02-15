@@ -97,6 +97,24 @@ class SponsoredPost extends BasePost // 子クラス Subクラス
 }
 
 
+class PremiumPost extends BasePost // 子クラス Subクラス
+{
+  private $price;
+
+  public function __construct($text, $price)
+  {
+    parent::__construct($text);
+    $this->price = $price;
+  }
+
+  // override
+  public function show()
+  {
+    printf('%s [%d JPY]' . PHP_EOL, $this->text, $this->price);
+  }
+}
+
+
 
 $posts = [];
 
@@ -114,6 +132,8 @@ $posts[1] = new Post('hello again');
 // $posts[0]->likes = -100;
 
 $posts[2] = new SponsoredPost('hello hello', 'dotinstall');
+
+$posts[3] = new PremiumPost('hello there', 300);
 
 function processPost(BasePost $post)
 {
