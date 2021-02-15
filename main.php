@@ -16,12 +16,17 @@
 
 // declare(strict_types=1);
 
-require('Post.php'); //読み込まれなかった時エラーになって処理が止まる
+// require('Post.php'); //読み込まれなかった時エラーになって処理が止まる
 // include('Post.php'); //読み込まれなかった時処理が止まらない（htmlなど読み込まれなくてもあまり問題がないものに使うことが多い）
 
 //onceをつけると既に読み込まれているファイルはスキップしてくれる。
 // require_once('Post.php');
 // include_once('Post.php');
+
+// newをした時にそのクラスがファイルに存在していなかったら（無名関数の引数にクラス名が入る）、外部ファイルを探して自動で読み込んでくれる
+spl_autoload_register(function ($class) {
+  require($class . '.php');
+});
 
 // トレイトはモジュールの共通化みたいなもの(コードの断片を使い回す時に便利)
 trait LikeTrait
