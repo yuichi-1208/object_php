@@ -108,7 +108,7 @@ class SponsoredPost extends BasePost // 子クラス Subクラス
 }
 
 
-class PremiumPost extends BasePost // 子クラス Subクラス
+class PremiumPost extends BasePost implements LikeInterface // 子クラス Subクラス
 {
   private $price;
   private $likes = 0;
@@ -153,18 +153,23 @@ $posts[1] = new Post('hello again');
 // $posts[0]->likes = -100;
 
 $posts[2] = new SponsoredPost('hello hello', 'dotinstall');
-
 $posts[3] = new PremiumPost('hello there', 300);
 
-$posts[0]-> like();
-$posts[3]-> like();
+
+function processLikeable(LikeInterface $likeable)
+{
+  $likeable->like();
+}
+
+// $posts[0]-> like();
+// $posts[3]-> like();
+processLikeable($posts[0]);
+processLikeable($posts[3]);
 
 function processPost(BasePost $post)
 {
   $post->show();
 }
-
-$posts[0]->like();
 
 // $posts[0]->show();
 // $posts[1]->show();
