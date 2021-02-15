@@ -16,6 +16,12 @@
 
 // declare(strict_types=1);
 
+// インターフェースはモジュールみたいなもの
+interface LikeInterface
+{
+  public function like();
+}
+
 // 子クラスにメソッドの定義を強制できる抽象クラス
 abstract class BasePost
 {
@@ -43,8 +49,9 @@ abstract class BasePost
   abstract public function show();
 }
 
+
 // クラス
-class Post extends BasePost//親クラス Superクラス
+class Post extends BasePost implements LikeInterface //親クラス Superクラス
 {
   // メソッド
   // overrideしてほしくない時は final をつける
@@ -53,10 +60,7 @@ class Post extends BasePost//親クラス Superクラス
   //   printf('%s (%d)' . PHP_EOL, $this->text, $this->likes);
   // }
 
-  public function show()
-  {
-    printf('%s (%d)' . PHP_EOL, $this->text, $this->likes);
-  }
+  private $likes = 0;
 
   public function like()
   {
@@ -67,12 +71,19 @@ class Post extends BasePost//親クラス Superクラス
     }
   }
 
+  public function show()
+  {
+    printf('%s (%d)' . PHP_EOL, $this->text, $this->likes);
+  }
+
+
   public static function showInfo()
   {
     // printf('Count: %d' . PHP_EOL, self::$count);
     printf('Version: %.1f' . PHP_EOL, self::VERSION);
   }
 }
+
 
 class SponsoredPost extends BasePost // 子クラス Subクラス
 {
@@ -100,6 +111,16 @@ class SponsoredPost extends BasePost // 子クラス Subクラス
 class PremiumPost extends BasePost // 子クラス Subクラス
 {
   private $price;
+  private $likes = 0;
+
+  public function like()
+  {
+    $this->likes++;
+
+    if ($this->likes > 100) {
+      $this->likes = 100;
+    }
+  }
 
   public function __construct($text, $price)
   {
@@ -110,7 +131,7 @@ class PremiumPost extends BasePost // 子クラス Subクラス
   // override
   public function show()
   {
-    printf('%s [%d JPY]' . PHP_EOL, $this->text, $this->price);
+    printf('%s (%d) [%d JPY]' . PHP_EOL, $this->text, $this->likes, $this->price);
   }
 }
 
@@ -134,6 +155,9 @@ $posts[1] = new Post('hello again');
 $posts[2] = new SponsoredPost('hello hello', 'dotinstall');
 
 $posts[3] = new PremiumPost('hello there', 300);
+
+$posts[0]-> like();
+$posts[3]-> like();
 
 function processPost(BasePost $post)
 {
