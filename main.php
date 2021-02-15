@@ -16,6 +16,12 @@
 
 // declare(strict_types=1);
 
+require('Post.php'); //読み込まれなかった時エラーになって処理が止まる
+// include('Post.php'); //読み込まれなかった時処理が止まらない（htmlなど読み込まれなくてもあまり問題がないものに使うことが多い）
+
+//onceをつけると既に読み込まれているファイルはスキップしてくれる。
+// require_once('Post.php');
+// include_once('Post.php');
 
 // トレイトはモジュールの共通化みたいなもの(コードの断片を使い回す時に便利)
 trait LikeTrait
@@ -63,32 +69,6 @@ abstract class BasePost
   }
 
   abstract public function show();
-}
-
-
-// クラス
-class Post extends BasePost implements LikeInterface //親クラス Superクラス
-{
-  // メソッド
-  // overrideしてほしくない時は final をつける
-  // final public function show()
-  // {
-  //   printf('%s (%d)' . PHP_EOL, $this->text, $this->likes);
-  // }
-
-  use LikeTrait;
-
-  public function show()
-  {
-    printf('%s (%d)' . PHP_EOL, $this->text, $this->likes);
-  }
-
-
-  public static function showInfo()
-  {
-    // printf('Count: %d' . PHP_EOL, self::$count);
-    printf('Version: %.1f' . PHP_EOL, self::VERSION);
-  }
 }
 
 
