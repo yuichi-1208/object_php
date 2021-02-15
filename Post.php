@@ -1,26 +1,42 @@
 <?php
 
+namespace Dotinstall\MyPHPApp;
 // クラス
-class Post extends BasePost implements LikeInterface //親クラス Superクラス
+// class Post extends BasePost implements LikeInterface //親クラス Superクラス
+// {
+//   // メソッド
+//   // overrideしてほしくない時は final をつける
+//   // final public function show()
+//   // {
+//   //   printf('%s (%d)' . PHP_EOL, $this->text, $this->likes);
+//   // }
+
+//   use LikeTrait;
+
+//   public function show()
+//   {
+//     printf('%s (%d)' . PHP_EOL, $this->text, $this->likes);
+//   }
+
+
+//   public static function showInfo()
+//   {
+//     // printf('Count: %d' . PHP_EOL, self::$count);
+//     printf('Version: %.1f' . PHP_EOL, self::VERSION);
+//   }
+// }
+
+class Post
 {
-  // メソッド
-  // overrideしてほしくない時は final をつける
-  // final public function show()
-  // {
-  //   printf('%s (%d)' . PHP_EOL, $this->text, $this->likes);
-  // }
+  private $text;
 
-  use LikeTrait;
-
-  public function show()
+  function __construct($text)
   {
-    printf('%s (%d)' . PHP_EOL, $this->text, $this->likes);
+    $this->text = $text;
   }
 
-
-  public static function showInfo()
+  function show()
   {
-    // printf('Count: %d' . PHP_EOL, self::$count);
-    printf('Version: %.1f' . PHP_EOL, self::VERSION);
+    printf('%s' . PHP_EOL, $this->text);
   }
 }

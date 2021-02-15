@@ -16,7 +16,10 @@
 
 // declare(strict_types=1);
 
-// require('Post.php'); //読み込まれなかった時エラーになって処理が止まる
+// use Dotinstall\MyPHPApp as MyPHPApp;
+use Dotinstall\MyPHPApp;
+
+require('Post.php'); //読み込まれなかった時エラーになって処理が止まる
 // include('Post.php'); //読み込まれなかった時処理が止まらない（htmlなど読み込まれなくてもあまり問題がないものに使うことが多い）
 
 //onceをつけると既に読み込まれているファイルはスキップしてくれる。
@@ -24,9 +27,11 @@
 // include_once('Post.php');
 
 // newをした時にそのクラスがファイルに存在していなかったら（無名関数の引数にクラス名が入る）、外部ファイルを探して自動で読み込んでくれる
-spl_autoload_register(function ($class) {
-  require($class . '.php');
-});
+// spl_autoload_register(function ($class) {
+//   require($class . '.php');
+// });
+
+class Post {}
 
 // トレイトはモジュールの共通化みたいなもの(コードの断片を使い回す時に便利)
 trait LikeTrait
@@ -124,12 +129,12 @@ class PremiumPost extends BasePost implements LikeInterface // 子クラス Sub�
 $posts = [];
 
 // インスタンス
-$posts[0] = new Post('hello');
+$posts[0] = new MyPHPApp\Post('hello');
 // $posts[0] = new Post(4);
 // $posts[0]->text = 'hello';
 // $posts[0]->likes = 0;
 
-$posts[1] = new Post('hello again');
+$posts[1] = new MyPHPApp\Post('hello again');
 // $posts[1]->text = 'hello again';
 // $posts[1]->likes = 0;
 
@@ -140,30 +145,34 @@ $posts[2] = new SponsoredPost('hello hello', 'dotinstall');
 $posts[3] = new PremiumPost('hello there', 300);
 
 
-function processLikeable(LikeInterface $likeable)
-{
-  $likeable->like();
-}
+// function processLikeable(LikeInterface $likeable)
+// {
+//   $likeable->like();
+// }
 
-// $posts[0]-> like();
-// $posts[3]-> like();
-processLikeable($posts[0]);
-processLikeable($posts[3]);
+// // $posts[0]-> like();
+// // $posts[3]-> like();
+// processLikeable($posts[0]);
+// processLikeable($posts[3]);
 
-function processPost(BasePost $post)
-{
+// function processPost(BasePost $post)
+// {
+//   $post->show();
+// }
+
+// // $posts[0]->show();
+// // $posts[1]->show();
+// // $posts[2]->show();
+// foreach ($posts as $post) {
+//   processPost($post);
+// }
+
+// $posts[2]->showSponsor();
+
+// Post::showInfo();
+
+// echo Post::VERSION . PHP_EOL;
+
+foreach ($posts as $post) {
   $post->show();
 }
-
-// $posts[0]->show();
-// $posts[1]->show();
-// $posts[2]->show();
-foreach ($posts as $post) {
-  processPost($post);
-}
-
-$posts[2]->showSponsor();
-
-Post::showInfo();
-
-echo Post::VERSION . PHP_EOL;
