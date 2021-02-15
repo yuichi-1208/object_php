@@ -16,6 +16,22 @@
 
 // declare(strict_types=1);
 
+
+// トレイトはモジュールの共通化みたいなもの(コードの断片を使い回す時に便利)
+trait LikeTrait
+{
+  private $likes = 0;
+
+  public function like()
+  {
+    $this->likes++;
+
+    if ($this->likes > 100) {
+      $this->likes = 100;
+    }
+  }
+}
+
 // インターフェースはモジュールみたいなもの
 interface LikeInterface
 {
@@ -60,16 +76,7 @@ class Post extends BasePost implements LikeInterface //親クラス Superクラ�
   //   printf('%s (%d)' . PHP_EOL, $this->text, $this->likes);
   // }
 
-  private $likes = 0;
-
-  public function like()
-  {
-    $this->likes++;
-
-    if ($this->likes > 100) {
-      $this->likes = 100;
-    }
-  }
+  use LikeTrait;
 
   public function show()
   {
@@ -110,17 +117,9 @@ class SponsoredPost extends BasePost // 子クラス Subクラス
 
 class PremiumPost extends BasePost implements LikeInterface // 子クラス Subクラス
 {
+  use LikeTrait;
+
   private $price;
-  private $likes = 0;
-
-  public function like()
-  {
-    $this->likes++;
-
-    if ($this->likes > 100) {
-      $this->likes = 100;
-    }
-  }
 
   public function __construct($text, $price)
   {
